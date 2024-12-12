@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Examen_MVVM.Models;
+using System.Windows.Input;
 
 namespace Examen_MVVM.ViewModels
 {
@@ -35,6 +36,66 @@ namespace Examen_MVVM.ViewModels
         {
             get => _subtotal;
             set => SetProperty(ref _subtotal, value);
+        }
+
+        public decimal Descuento
+        {
+            get => _descuento;
+            set => SetProperty(ref _descuento, value);
+        }
+
+        public decimal Total
+        {
+            get => _total;
+            set => SetProperty(ref _total, value);
+        }
+
+        public ICommand CalcularCommand { get; }
+        public ICommand LimpiarCommand { get; }
+
+        public MainPageViewModel()
+        {
+            CalcularCommand = new RelayCommand(Calcular);
+            LimpiarCommand = new RelayCommand(Limpiar);
+        }
+
+        private void Calcular()
+        {
+            try
+            {
+                var subtotal = Producto1 + Producto2 + Producto3;
+                var descuento = CalcularDescuento(subtotal);
+                var total = subtotal - descuento;
+
+                Subtotal = subtotal;
+                Descuento = descuento;
+                Total = total;
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private decimal CalcularDescuento(decimal subtotal)
+        {
+            if (subtotal >= 1000 && subtotal <= 4999.99m)
+                return subtotal * 0.10m;
+            else if (subtotal >= 5000 && subtotal <= 9999.99m)
+                return subtotal * 0.20m;
+            else if (subtotal >= 10000)
+                return subtotal * 0.30m;
+            else
+                return 0;
+        }
+
+        private void Limpiar()
+        {
+            Producto1 = 0;
+            Producto2 = 0;
+            Producto3 = 0;
+            Subtotal = 0;
+            Descuento = 0;
+            Total = 0;
         }
     }
 }
