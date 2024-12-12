@@ -1,5 +1,4 @@
-﻿using Examen_Mvvm.ViewModels;
-using Examen_MVVM.ViewModels;
+﻿using Examen_MVVM.ViewModels;
 
 namespace Examen_Mvvm
 {

@@ -50,6 +50,8 @@ namespace Examen_MVVM.ViewModels
             set => SetProperty(ref _total, value);
         }
 
+        private Exception EX = null;
+
         public ICommand CalcularCommand { get; }
         public ICommand LimpiarCommand { get; }
 
@@ -73,6 +75,17 @@ namespace Examen_MVVM.ViewModels
             }
             catch (Exception ex)
             {
+                EX = ex;
+                Console.WriteLine("Error al calcular el subtotal, descuento y total: " + ex.Message);
+            }
+
+            if (EX != null)
+            {
+                Console.WriteLine("Se produjo una excepción al calcular el subtotal, descuento y total.");
+            }
+            else
+            {
+                Console.WriteLine("Se calculó correctamente el subtotal, descuento y total.");
             }
         }
 
